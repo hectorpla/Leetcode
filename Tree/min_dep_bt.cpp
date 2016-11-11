@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int minDepth(TreeNode* root) {
+    int minDepth(TreeNode* root) { // BFS
         queue<TreeNode*> q;
         int level = 0, numNodes = 1; // number of nodes for each loop to pop
         
@@ -27,5 +27,20 @@ public:
             numNodes = nNext;
         }
         return level;
+    }
+};
+
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if ( root == NULL ) return 0;
+        
+        int minl, minr, m;
+        minl = minDepth(root->left);
+        minr = minDepth(root->right);
+        m = min(minl, minr);
+        if ( minl == 0 ) m = minr;
+        if ( minr == 0 ) m = minl;
+        return 1 + m;
     }
 };
