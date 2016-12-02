@@ -2,6 +2,8 @@ class Solution {
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
+        if ( !n ) return 0;
+        if ( n == 1 ) return nums[0]; // special case!!!
         vector<int> MM1(n, 0); // rob from the head
         vector<int> MM2(n + 1, 0); // rob from the end
         
@@ -18,6 +20,6 @@ public:
             cout << MM2[i] << " ";
         }
         
-        return max(MM1[n-2], MM2[1]);
+        return max(MM1[n-1], MM2[1]);
     }
 };
