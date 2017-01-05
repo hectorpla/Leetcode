@@ -12,7 +12,11 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+TreeNode* find(TreeNode* root, int target);
+void printTree(TreeNode* root);
 void printRoot(TreeNode* root);
+TreeNode *createTree(std::vector<int>& vec);
+
 
 /* creating Leetcode style BT, 
  * value of each nodes should be 
@@ -62,6 +66,15 @@ TreeNode *createTree(std::vector<int>& vec) {
  	root->right = createTree_rec(vec, pos * 2 + 2);
  	return root;
  }
+
+TreeNode* find(TreeNode* root, int target) {
+	while ( root ) {
+		if ( root->val == target ) return root;
+		else if ( root->val > target ) root = root->left;
+		else root = root->right;
+	}
+	return root;
+}
 
 void printTree(TreeNode* root) {
 	printRoot(root);
