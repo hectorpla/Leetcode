@@ -25,7 +25,6 @@ using namespace std;
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        set<ListNode*> met;
         ListNode *slow = head, *fast = head;
         
         while ( fast ) {
@@ -39,17 +38,42 @@ public:
         }
         return false;
     }
+
+    ListNode *detectCycle(ListNode *head) {
+        if (!head) return NULL;
+        ListNode *slow = head, *fast = head;
+        
+        while (fast) {
+            fast = fast->next;
+            if (fast) fast = fast->next;
+            else return NULL;
+            slow = slow->next;
+            if (fast == slow) break;
+        }
+        cout << fast->val << endl;
+
+        slow = head;
+        while (true) {
+            if (fast == slow) return fast;
+            fast = fast->next;
+            slow = slow->next;
+        }
+        return NULL;
+    }
 };
 
 int main(int argc, char const *argv[])
 {
-    listnode_t* head = new ListNode(5);
+    listnode_t* head = new ListNode(1);
     head->next = new ListNode(2);
-    head->next->next = head;
+    // head->next->next = head;
     // head->next->next = new ListNode(3);
     // head->next->next = head;
 
     Solution sol;
-    cout << sol.hasCycle(head) << endl;
+    if (sol.detectCycle(head))
+        cout << sol.detectCycle(head)->val << endl;
+    else
+        cout << "no cycle" << endl;
     return 0;
 }
