@@ -43,11 +43,11 @@ public:
                 if ((j + 1 == i - 1 && s[j] == s[i-1]) || (VP[j+1][i-2] && s[j] == s[i-1])) {
                     VP[j][i-1] = true;
                     temp_min = min(temp_min, MC[j] + 1);
-                    cout << ".";
+                    cout << j << "th: " << MC[j];
                 }
             }
             cout << endl;
-            MC[i] = temp_min == INT_MAX ? MC[i-1] + 1 : temp_min;
+            MC[i] = min(temp_min, MC[i-1] + 1); // the last character is definitely itself a panlidrome
         }
         for (int i = 0; i < s.size(); i++) {
             for (int j = 0; j < s.size(); j++) {
