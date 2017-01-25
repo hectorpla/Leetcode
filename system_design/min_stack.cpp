@@ -1,53 +1,36 @@
 #include <iostream>
-
-typedef struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
-} Node;
+#include <stack>
+using namespace std;
 
 class MinStack {
 public:
     /** initialize your data structure here. */
     MinStack() {
-        head = NULL;
+    
     }
     
     void push(int x) {
-        Node* temp = new Node(x);
-        if ( head == NULL ) {
-            head = temp;
-        }
-        temp->next = head;
-        head = temp;
-        
+       st.push(x);
+       if (minStack.empty()) minStack.push(x);
+       else minStack.push(min(x, minStack.top()));
     }
     
     void pop() {
-        if ( !head ) return;
-        Node* temp = head;
-        head = temp->next;
-        delete temp;
+        st.pop();
+        minStack.pop();
     }
     
     int top() {
-        if ( !head ) return 0;
-        return head->val;
+        return st.top();
     }
     
     int getMin() {
-        int min_val = head ? head->val : 0;
-        Node* cur = head;
-
-        while ( cur ) {
-            min_val = std::min(cur->val, min_val);
-            cur = cur->next;
-        }
-        return min_val;
+        return minStack.top();
     }
     
 private:
-    Node* head;
+    stack<int> st;
+    stack<int> minStack;
 };
 
 /**
@@ -58,16 +41,21 @@ private:
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
  */
-using namespace std;
+
 
 int main(int argc, char const *argv[])
 {
     MinStack ms;
-    for (int i = 0; i < 10; ++i)
-    {
-     ms.push(i*i);
-    }
-
+    cout << "pusing " << -2 << endl;
+    ms.push(-2);
+    cout << "pusing " << 0 << endl;
+    ms.push(0);
+    cout << "pusing " << -3 << endl;
+    ms.push(-3);
     cout << ms.getMin() << endl;
+    ms.pop();
+    cout << ms.top() << endl;
+    cout << ms.getMin() << endl;
+
     return 0;
 }
