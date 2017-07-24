@@ -1,0 +1,28 @@
+class Solution(object):
+    def diffWaysToCompute(self, input):
+        """
+        :type input: str
+        :rtype: List[int]
+        """
+        res = set()
+        start = self.next_operator(input, 0)
+        start_val = eval(input[:start])
+        return list(self.helper(res, input, start_val, start))
+    def helper(self, results, data, cur_val, start, d=0):
+        """start is the position of the operator"""
+        # print(' ' * d + str(start))
+        if start >= len(data):
+            results.add(cur_val)
+            # print(results)
+            return
+        p = start + 1
+        while p < len(data):
+            p = self.next_operator(data, p) + 1
+            print(' ' * d,end='')
+            print(str(cur_val), data[start:p])
+            self.helper(results, data, eval(str(cur_val) + data[start:p-1]), p, d+1)
+    def next_operator(self, seq, pos):
+        while pos < len(seq) and seq[pos].isdigit():
+            print('here')
+            pos += 1
+        return pos

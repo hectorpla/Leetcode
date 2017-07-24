@@ -26,6 +26,18 @@ class Solution:
 		# print '--', lmax, rmax
 		return max(lmax, rmax)
 
+	def modify(self, root, index, value):
+		if root.start == root.end:
+			# assert root.start == index
+			root.max = value
+			return
+		m = (root.start + root.end) / 2
+		if index <= m:
+			self.modify(root.left, index, value)
+		else:
+			self.modify(root.right, index, value)
+		root.max = max(root.left.max, root.right.max)
+
 if __name__ == "__main__":
 	root = SegmentTreeNode(0,3,4)
 	root.left = SegmentTreeNode(0,1,4)
